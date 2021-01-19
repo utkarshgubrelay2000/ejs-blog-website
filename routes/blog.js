@@ -8,7 +8,7 @@ const fs = require('fs')
 const { promisify } = require('util')
 var cloudinary = require('cloudinary').v2;
 const unlinkAsync = promisify(fs.unlink)
-
+const blog=require('../model/blogModel');
 cloudinary.config({ 
   cloud_name: 'dvu7miswu', 
   api_key: '539199276215388', 
@@ -25,11 +25,17 @@ var upload = mutter({
   storage: Storage
 })
 
-router.post('/uploadImage', async (req,res)=>{
-console.log(req.body)
-// await cloudinary.uploader.upload(req.fil, function(error, result) {console.log(result, error)});
-//   await unlinkAsync(req.file.path)
-  res.json('ok')
+router.post('/uploadImage',upload.single('avatar'),async (req,res)=>{
+  console.log(req.file,req.body.id)
+await cloudinary.uploader.upload(req.file.path, function(error, result) {
+blog.findById(req.body.id).then(found=>{
+  found.thumbImage=result.secure_url
+  found.save()
+})
+  res.redirect('/api/admin/secret')
+});
+  await unlinkAsync(req.file.path)
+  
   })
 
 /* GET home page. */
@@ -45,7 +51,7 @@ router.post('/postBlog',blogController.postBlog,err=>{
 router.put('/editBlog/:id',blogController.editBlog,err=>{
   console.log('error while signup user')
 })
-router.delete('/deleteBlog/:id',blogController.deleteBlog,err=>{
+router.delete('/deleteBlog/:id/:token',blogController.deleteBlog,err=>{
     console.log('error while signup user')
   })
   router.get('/',blogController.getAllBlog)

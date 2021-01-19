@@ -63,22 +63,28 @@
     Add Blog
   </a>
 </p>
-<div class="collapse" id="collapseExample">
+<div class="collapse" style="    width: 60%;
+margin: auto;" id="collapseExample">
   <div class="card card-body text-center">
-	
-		  <input name='heading' id='heading' placeholder='Title' >  <br>
+
+		  <input required name='heading' id='heading' placeholder='Title' >  <br>
 		  <input name='shortContent' id="shortContent" placeholder='Short Description of your blog' >  <br>
-		
-		  
-			<input class="btn btn-outline-success" type="file" name="avatar"
-			 id='fileinput' />
-		
-		  <div >
+		 
+			  <div >
 			  <p>  Write Blog content here</p>
 			  <input id="editor" name='content' style="width: 100%;"> 
+
 			</div> <br>
-			<button onclick="myfunction()">Submit </button>
 		</form>
+		<form action="/uploadImage" method="post" enctype="multipart/form-data">
+			<label> Upload A ThumbNail for Your Blog</label>
+			<input type="file" required name="avatar" >
+			
+			
+			<input type="text "   style="display:none" id='idField' name='id'>
+			<button id='submitButton' style="display:none">submit</button>
+		  </form>
+		<button onclick="myfunction()" class="btn btn-outline-success mt-2 rounded-pill">Submit</button>
 	</div>
 </div>
 <div class="card-columns listfeaturedtag" >
@@ -102,24 +108,21 @@
 					<div class="metafooter">
 						<div class="wrapfooter">
 							<span class="meta-footer-thumb">
-							<a href="author.html">
 							<img class="author-thumb" 
 							src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="John Doe"></a>
 							</span>
 							<span class="author-meta">
-							<span class="post-name"><a href="author.html"> 
+							<span class="post-name"><a href="#"> 
 							<%let name=userDetails.name.toUpperCase()%>
-							<%=name%> </a></span><br/>
+							<%=name%> </span><br/>
 							<span class="post-date"><%=element.date%></span>
 							<span class="dot"></span><span class="post-read"> 
-	
 							<%=element.time%>
 							 </span>
 							</span>
-							<span class="post-read-more"><a href="<%= element.blogId%>" title="Read Story">
+							<span class="post-read-more">
 								<div>
-									<button class=" btn btn-outline-success">
-
+									<button class=" btn btn-outline-success" onclick="editBlog('<%=element.blogId%>')" data-toggle="modal" data-target="#staticBackdrop">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
 											<path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
 										</svg>
@@ -142,16 +145,43 @@
 
 </div>
 </div>
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="staticBackdropLabel">Loading..</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+			<div  style="width: 60%;
+			margin: auto;" >
+			  <div class="card card-body text-center">
+					  <input required name='heading' id='heading' placeholder='Title' >  <br>
+					  <input name='shortContent' id="shortContentforEditing" 
+					  placeholder='Short Description of your blog' >  <br>
+ <br>
+					</form>
+					<button onclick="myfunction()" class="btn btn-outline-success mt-2 rounded-pill">Submit</button>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  <button type="button" class="btn btn-primary">Edit</button>
+		</div>
+	  </div>
+	</div>
+  </div>
 
 <script src="/assets/js/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="/assets/js/bootstrap.min.js"></script>
-<script src="/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script>
 	let editor;
 	const input = document.getElementById('fileinput');
-
 	const onSelectFile = () => upload(input.files[0]);
 localStorage.setItem('token',"<%=token %>")
 ClassicEditor
@@ -162,46 +192,30 @@ ClassicEditor
     .catch( error => {
         console.error( error );
     } );
-	
-	
-	document.querySelector('#fileinput').addEventListener('change', event =>{
-		const files = event.target.files
-  const formData = new FormData()
-  formData.append('myFile', files[0])
-console.log(formData)
-  fetch('/uploadImage', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data)
-  })
-  .catch(error => {
-    console.error(error)
-  })
 
-	})
-	
-	function myfunction(){
-	
+async	function myfunction(){
 		let content = editor.getData()
 		let heading=document.getElementById('heading').value;
-		let thumbnail=document.getElementById('thumbImage').value;
-		console.log(heading,thumbnail)
+		//console.log(heading,thumbnail)
 		let shortContent=document.getElementById('shortContent').value;
-		fetch('/postBlog', {
+let reponseFromBlogPosting=	await fetch('/postBlog', {
 			headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     method: "POST",
-    body: JSON.stringify({content: content, heading:heading,shortContent:shortContent,thumbImage:thumbnail})
+    body: JSON.stringify({content: content, heading:heading,shortContent:shortContent})
   }).then(function(response) {
     return response.json();
   }).then(function(data) {
-    console.log('done')
+	console.log('done',data)
+	return data;
   });
+  document.getElementById('idField').value=reponseFromBlogPosting
+  console.log(reponseFromBlogPosting, document.getElementById('idField'))
+
+  await document.getElementById('submitButton').click()
+ // window.location.reload()
 	}
 function logout(){
 	console.log('click')
@@ -213,8 +227,14 @@ if(!localStorage.getItem('token')){
 //	console.log('hello')
 }
 
+function editBlog(element){
+	console.log('clicked')
+document.getElementById('staticBackdropLabel').innerHTML=element
+}
+
 function deleteBlog(id){
 	console.log(id)
+	window.location.reload();
 	fetch('/deleteBlog/'+id+"/" +localStorage.getItem('token'), {
 			headers: {
       'Accept': 'application/json',
