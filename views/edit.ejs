@@ -96,7 +96,7 @@
 
 <form action="/uploadImage" method="post" enctype="multipart/form-data">
 			<input type="file" onchange='imageUpload()' name="avatar" >
-			<input type="text " value='<%=blog._id %>' id='idField' name='id'>
+			<input type="text " value='<%=blog._id %>' style='display:none' id='idField' name='id'>
 			<button id='submitButton' style="display:none">submit</button>
 		  </form>
 
