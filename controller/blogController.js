@@ -72,7 +72,7 @@ exports.getAllBlog=(req,res)=>{
 }
 exports.getBlogById=(req,res)=>{
     blog.findOne({blogId:req.params.id}).sort({_id:-1}).then(blogs=>{
-       // console.log(blogs.userId)
+        console.log(blogs.userId)
         admin.find({}).then(userDetails=>{
             console.log(userDetails)
             blog.find({}).sort({_id:-1}).then(blogsRec=>{
