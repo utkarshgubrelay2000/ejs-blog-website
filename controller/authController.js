@@ -108,7 +108,7 @@ exports.Signin = (req, res) => {
                   //    token:token,userId:userDetails[0]._id,
                   //    name:userDetails[0].name
                   //  })
-                    res.render('adminPanel',{blogs:blogs,userDetails:userDetails[0],token:token})
+                    res.render('signUp',{blogs:blogs,userDetails:userDetails[0],token:token})
                 })
             }).catch(err=>{
               console.log(err)

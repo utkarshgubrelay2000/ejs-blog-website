@@ -25,9 +25,9 @@ let blogId=heading.replace(/\s/g,"-")
 exports.adminpanel=(req,res)=>{
 
     blog.find({}).then(blogs=>{
-        admin.findOne({_id:blogs[0].userId}).then(userDetails=>{
+        admin.find({}).then(userDetails=>{
            // console.log(userDetails)
-            res.render('adminPanel',{blogs:blogs,userDetails:userDetails})
+            res.render('adminPanel',{blogs:blogs,userDetails:userDetails[0]})
 
         })
     }).catch(err=>{
@@ -35,11 +35,19 @@ exports.adminpanel=(req,res)=>{
     })
 }
 exports.editBlog=(req,res)=>{
-    const {content,thumbImage,heading}=req.body
+    const {content,heading}=req.body
     let blogId=heading.replace(/\s/g,"-")
-   blog.findByIdAndUpdate(req.params.id,{ heading:heading,content:content,thumbImage:thumbImage
-    , blogId: blogId}).then(saved=>{
-        res.json('Updated')
+   blog.findByIdAndUpdate(req.params.id,{ heading:heading,content:content,
+     blogId: blogId}).then(saved=>{
+        blog.find({}).then(blogs=>{
+            admin.find({}).then(userDetails=>{
+                console.log(userDetails)
+                res.render('adminPanel',{blogs:blogs,userDetails:userDetails[0]})
+    
+            })
+        }).catch(err=>{
+            res.send('4040 not found')
+        })
     }).catch(err=>{
        res.status(404).json('4040 not found')
     })
@@ -67,7 +75,7 @@ exports.getBlogById=(req,res)=>{
        // console.log(blogs.userId)
         admin.find({}).then(userDetails=>{
             console.log(userDetails)
-            blog.find({}).then(blogsRec=>{
+            blog.find({}).sort({_id:-1}).then(blogsRec=>{
                 res.render('post',{blog:blogs,userDetails:userDetails[0],moreBlogs:blogsRec})
             })
         })
@@ -75,6 +83,17 @@ exports.getBlogById=(req,res)=>{
         res.send('4040 not found')
     })
 }
+exports.editBlogPage=(req,res)=>{
+    blog.findOne({blogId:req.params.id}).sort({_id:-1}).then(blogs=>{
+       // console.log(blogs.userId)
+        admin.find({}).then(userDetails=>{
+                res.render('edit',{blog:blogs,userDetails:userDetails[0]})
+        })
+    }).catch(err=>{
+        res.send('4040 not found')
+    })
+}
+
 exports.uploadImage=(req,res)=>{
  
 res.json('Success')

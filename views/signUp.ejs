@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignIN</title>
+</head>
+<body>
+    <script>
+localStorage.setItem('token',"<%=token %>")
+let a=document.createElement('a')
+
+a.href='/adminPanel/'+"<%=token %>"
+a.click()
+    </script>
+</body>
+</html>
