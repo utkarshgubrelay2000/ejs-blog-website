@@ -92,14 +92,14 @@ margin: auto;" id="collapseExample">
 		<div class="card">
 		<div class="row">
 			<div class="col-md-5 wrapthumbnail">
-				<a href="<%= element.blogId%>">
+				<a target="_blank" onclick="lendToUrl('<%= element.blogId%>')" href="<%= element.blogId%>">
 					<div class="thumbnail" style="background-image:url(<%=element.thumbImage%>);">
 					</div>
 				</a>
 			</div>
 			<div class="col-md-7">
 				<div class="card-block">
-					<h2 class="card-title"><a href="<%= element.blogId%>"><%= element.heading%></a></h2>
+					<h2 class="card-title"><a onclick="lendToUrl('<%= element.blogId%>')"><%= element.heading%></a></h2>
 					<h4 class="card-text">
 					<%=element.shortContent%>
 					</h4>
@@ -193,7 +193,11 @@ if(!localStorage.getItem('token')){
 	window.location.href='/'
 //	console.log('hello')
 }
-
+function lendToUrl(url){
+	let a=document.createElement('a')
+	a.href='/'+url
+	a.click()
+}
 function editBlog(element){
 	console.log('clicked')
 let a=document.createElement('a')

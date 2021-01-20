@@ -27,8 +27,9 @@ var upload = mutter({
 })
 
 router.post('/uploadImage',upload.single('avatar'),async (req,res)=>{
-  console.log(req.file,req.body.id)
+  
   await cloudinary.uploader.upload(req.file.path, function(error, result) {
+    console.log(result)
 blog.findById(req.body.id).then(found=>{
   found.thumbImage=result.secure_url
   found.save().then(saved=>{
