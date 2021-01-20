@@ -206,10 +206,10 @@ function myfunction(id){
     method: "PUT",
     body: JSON.stringify({content: content, heading:heading})
   }).then(function(response) {
+  window.location.href='/adminPanel/'+localStorage.getItem('token')
     return response.json();
   }).then(function(data) {
 	console.log('done')
-  window.location.href='/'
 
   });
 
