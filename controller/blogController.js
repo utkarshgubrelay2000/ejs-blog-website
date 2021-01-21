@@ -5,7 +5,6 @@ exports.postBlog= async (req,res)=>{
     const {content,thumbImage,heading,shortContent,userId}=req.body
     console.log(req.body.thumbImage)
    // res.render('author',{content:content})
-   
     let newdate= new Date()
 let blogId=heading.replace(/\s/g,"-")
 // //console.log(newdate.toDateString())
@@ -54,8 +53,9 @@ console.log('done',req.params)
 }
 exports.getAllBlog=(req,res)=>{
     blog.find({}).then(blogs=>{
+      //  console.log(blogs)
         admin.find({}).then(userDetails=>{
-           // console.log(userDetails)
+           console.log(userDetails)
             res.render('index',{blogs:blogs,userDetails:userDetails[0]})
         })
     }).catch(err=>{
@@ -65,7 +65,7 @@ exports.getAllBlog=(req,res)=>{
 exports.getBlogById=(req,res)=>{
    
     blog.findOne({blogId:req.params.id}).sort({_id:-1}).then(blogs=>{
-       // console.log(blogs.userId)
+        console.log(blogs.userId)
         admin.find().then(userDetails=>{
           //  console.log(userDetails)
             blog.find({}).sort({_id:-1}).then(blogsRec=>{
@@ -73,9 +73,33 @@ exports.getBlogById=(req,res)=>{
             })
         })
     }).catch(err=>{
-        res.send('4040 not found')
+        res.send('404 not found')
     })
 }
-exports.uploadImage=(req,res)=>{
-res.json('Success')
+
+exports.getAllBlogInResponse=(req,res)=>{
+    blog.find({}).sort({_id:-1}).then(blogs=>{
+        admin.find().then(userDetails=>{
+          //  console.log(userDetails)
+            blog.find({}).sort({_id:-1}).then(blogsRec=>{
+                res.json({blogs:blogs,userDetails:userDetails[0],moreBlogs:blogsRec})
+            })
+        })
+    }).catch(err=>{
+        res.status(404).json('404 not found')
+    })
+}
+exports.getBlogByIdInResponse=(req,res)=>{
+   
+    blog.findOne({blogId:req.params.id}).sort({_id:-1}).then(blogs=>{
+        console.log(blogs.userId)
+        admin.find().then(userDetails=>{
+          //  console.log(userDetails)
+            blog.find({}).sort({_id:-1}).then(blogsRec=>{
+                res.json({blog:blogs,userDetails:userDetails[0],moreBlogs:blogsRec})
+            })
+        })
+    }).catch(err=>{
+        res.status(404).json('404 not found')
+    })
 }

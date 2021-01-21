@@ -19,26 +19,23 @@ var Storage = mutter.diskStorage({
   destination: "./Static",
   filename: (req, file, cb) => {
       cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
-  }
-})
-var upload = mutter({
-  storage: Storage
-})
-
-router.post('/uploadImage', async (req,res)=>{
-console.log(req.body)
-// await cloudinary.uploader.upload(req.fil, function(error, result) {console.log(result, error)});
-//   await unlinkAsync(req.file.path)
-  res.json('ok')
+    }
   })
+  var upload = mutter({
+    storage: Storage
+  })
+  
+  router.get('/ji',(req,res)=>{
+    res.json('hhh')
+  })
+    router.get('/getAllBlog',blogController.getAllBlogInResponse)/// json response
+    router.get('/getBlogById/:id',blogController.getBlogByIdInResponse)/// json response
 
 /* GET home page. */
 router.get('/postBlog',(req,res)=>{
   res.render('author')
 })
 
-
-router.get('/api/admin/secret',verifyAdmin,blogController.adminpanel)
 router.post('/postBlog',blogController.postBlog,err=>{
   console.log('error while signup user')
 })
@@ -48,6 +45,8 @@ router.put('/editBlog/:id',blogController.editBlog,err=>{
 router.delete('/deleteBlog/:id',blogController.deleteBlog,err=>{
     console.log('error while signup user')
   })
-  router.get('/',blogController.getAllBlog)
-  router.get('/:id',blogController.getBlogById)
+  router.get('/',blogController.getAllBlog) //// for ejs render
+  router.get('/:id',blogController.getBlogById) // ejs render
+
+//// Json Response
 module.exports=router
