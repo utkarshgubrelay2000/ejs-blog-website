@@ -57,7 +57,7 @@ exports.getAllBlog = (req, res) => {
     blog.find({}).then(blogs => {
         //  console.log(blogs)
         admin.find({}).then(userDetails => {
-            console.log(userDetails)
+           
             res.render('index', { blogs: blogs, userDetails: userDetails[0] })
         })
     }).catch(err => {
@@ -67,7 +67,6 @@ exports.getAllBlog = (req, res) => {
 exports.getBlogById = (req, res) => {
 
     blog.findOne({ blogId: req.params.id }).sort({ _id: -1 }).then(blogs => {
-        console.log(blogs.userId)
         admin.find().then(userDetails => {
             //  console.log(userDetails)
             blog.find({}).sort({ _id: -1 }).then(blogsRec => {
