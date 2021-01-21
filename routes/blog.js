@@ -46,7 +46,7 @@ router.delete('/deleteBlog/:id',blogController.deleteBlog,err=>{
     console.log('error while signup user')
   })
   router.get('/',blogController.getAllBlog) //// for ejs render
-  router.get('/:id',blogController.getBlogById) // ejs render
+  router.get('/getBlog/:id',blogController.getBlogById) // ejs render
 
 //// Json Response
 module.exports=router
