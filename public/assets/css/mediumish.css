@@ -37,6 +37,9 @@ section {
 		-moz-column-count:2;
 		column-count:2;
 	}
+	.container .logo{
+		text-align: center;
+	}
 }
 @media (min-width:992px) {
 	.navbar-toggleable-md .navbar-nav .nav-link {
@@ -321,6 +324,14 @@ ul.tags {
 	list-style:none;
 	padding-left:0;
 	margin:0 0 3rem 0;
+}
+.container .logo{
+	text-align: left;
+}
+@media (max-width:767px){
+.container	.logo{
+		text-align: center;
+	}
 }
 ul.tags li {
 	display:inline-block;
